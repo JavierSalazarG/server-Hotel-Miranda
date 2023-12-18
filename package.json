@@ -1,17 +1,20 @@
 {
   "name": "server-hotel-miranda",
   "version": "1.0.0",
-  "description": "",
+  "description": "server creado con Node y expres para Hotel Miranda",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.ts"
   },
-  "author": "",
+  "author": "Javier Salazar",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
     "nodemo": "^1.0.0",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
   }
 }
