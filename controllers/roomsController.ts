@@ -1,49 +1,20 @@
-import express, { Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { RoomsInterface } from '../models/rooms';
+import { getAllRooms } from '../services/rooms';
+import { roomById } from '../services/rooms';
 
-import * as fs from 'fs'
-import * as path from 'path'
 export const roomsRouter = Router()
-const filePath = path.join(__dirname, '../data/rooms.json');
+
 
 roomsRouter.get('/', (req: Request, res: Response) => {
-    fs.readFile(filePath, 'utf-8', (err, data) => {
-        if(err) {
-            console.log(err)
-            return res.status(500).json({error: 'Error al leer el JSON'})
-        }
-        try{ const rooms: RoomsInterface[] = JSON.parse(data)
-        res.json(rooms)
-        }
-        catch (parseError){
-            console.error(parseError)
-            res.status(500).json({error: 'Error al cargar el contenido de los datos'})
-        }
-    })})
+   const rooms: RoomsInterface[] = getAllRooms()
+   res.send(rooms)
+})
 
 roomsRouter.get('/:id', (req: Request, res: Response) => {
     let id: string = req.params.id;
-    fs.readFile(filePath, 'utf-8', (err, data) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({ error: 'Error al leer el JSON' });
-        }
-
-        try {
-            const rooms: RoomsInterface[] = JSON.parse(data);
-            
-            const room = rooms.find((room_select: RoomsInterface) => room_select.id === id);
-
-            if (!room) {
-                return res.status(404).json({ error: 'Booking no encontrado' });
-            }
-
-            res.json(room);
-        } catch (parseError) {
-            console.error(parseError);
-            res.status(500).json({ error: 'Error al cargar el contenido de los datos' });
-        }
-    });
+    const room: RoomsInterface | undefined = roomById(id)
+    res.send(room)
 });
 
 roomsRouter.post('/new', (req: Request, res: Response)=>{
