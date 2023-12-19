@@ -1,15 +1,11 @@
 const express = require('express')
-import routerBooking from "./services/booking/routerBooking";
+
+import {bookingRouter}  from './controllers/bookingsController';
 const app = express();
 const port = 3000;
 
-
-app.get('/', (req: Request, res: Response) => {
-
-})
-
-app.use(routerBooking)
-
+app.use('/bookings', bookingRouter);
+app.use('/bookings/:id', bookingRouter);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

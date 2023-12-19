@@ -1,5 +1,5 @@
  export interface BookingInterface {
-    id: number
+    id: string
     id_habitacion?: string
     nombre: string
     apellidos: string
