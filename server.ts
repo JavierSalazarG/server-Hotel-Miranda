@@ -1,4 +1,4 @@
-const express = require('express')
+const express  = require('express')
 
 import {bookingRouter}  from './controllers/bookingsController';
 import { commentsRouter } from './controllers/commentsController';
@@ -7,7 +7,8 @@ import { roomsRouter } from './controllers/roomsController';
 import { usersRouter } from './controllers/usersController';
 import { loginAuthenticationMiddleware } from './middleware/login';
 const app = express();
-const port = 3000;
+app.use(express.json())
+const port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
 
 app.use('/login', loginRouter)
 app.use(loginAuthenticationMiddleware)
@@ -32,3 +33,4 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
+export default app

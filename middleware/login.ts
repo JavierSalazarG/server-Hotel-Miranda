@@ -16,8 +16,8 @@ export const newToken = (email: string, password: string) => {
   return null;
 };
 
-export const loginAuthenticationMiddleware = (
-  req: AuthenticatedRequest, 
+export const loginAuthenticationMiddleware = async (
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -25,18 +25,20 @@ export const loginAuthenticationMiddleware = (
   if (!auth)
     return res
       .status(401)
-      .json({ error: true, message: 'la autorizacion no esta en el header' });
+      .json({ error: true, message: 'la autorización no está en el encabezado' });
   const token = auth.split('Bearer ')[1];
 
   if (!token) {
     return res.status(401).json({ error: 'No autorizado' });
   } else {
     if (KEY_ENV) {
-      jwt.verify(token, KEY_ENV, (err: any, perfil: any) => {
-        if (err) return res.status(403).json({ error: 'Error en el token' });
+      try {
+        const perfil = await jwt.verify(token, KEY_ENV);
         req.perfil = perfil;
         next();
-      });
+      } catch (err) {
+        return res.status(403).json({ error: 'Error en el token' });
+      }
     }
   }
 };
