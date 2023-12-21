@@ -2,11 +2,15 @@ const express = require('express')
 
 import {bookingRouter}  from './controllers/bookingsController';
 import { commentsRouter } from './controllers/commentsController';
+import { loginRouter } from './controllers/login';
 import { roomsRouter } from './controllers/roomsController';
 import { usersRouter } from './controllers/usersController';
+import { loginAuthenticationMiddleware } from './middleware/login';
 const app = express();
 const port = 3000;
 
+app.use('/login', loginRouter)
+app.use(loginAuthenticationMiddleware)
 //Bookings
 app.use('/bookings', bookingRouter);
 app.use('/bookings/:id', bookingRouter);
