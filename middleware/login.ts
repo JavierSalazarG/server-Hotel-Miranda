@@ -8,14 +8,6 @@ interface AuthenticatedRequest extends Request {
 }
 const KEY_ENV = process.env.JWT_SECRET;
 
-export const newToken = (email: string, password: string) => {
-  if (email === 'admin@admin.com' && password === 'admin') {
-    if (KEY_ENV) return jwt.sign({ email }, KEY_ENV, { expiresIn: '24h' });
-    throw new Error('Error en key');
-  }
-  return null;
-};
-
 export const loginAuthenticationMiddleware = async (
   req: AuthenticatedRequest,
   res: Response,
