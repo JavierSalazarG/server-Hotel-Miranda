@@ -1,7 +1,7 @@
 import express, { Request, Response, response } from "express";
 export const loginRouter = express.Router();
 import jwt from 'jsonwebtoken';
-const KEY_ENV = process.env.JWT_SECRET;
+const KEY_ENV: string  = process.env.JWT_SECRET;
 
 
 loginRouter.post('/', async (req, res) => {
