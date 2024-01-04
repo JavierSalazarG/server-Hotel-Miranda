@@ -1,11 +1,57 @@
+import { RoomModel, RoomsInterface } from "../models/rooms";
 
-import { RoomsInterface } from '../models/rooms'
-import rooms from '../data/rooms.json'
+export const allRooms = async (): Promise<RoomsInterface[]> => {
+  return await RoomModel.find();
+};
+export const roomById = async (
+  id: string
+): Promise<RoomsInterface | undefined> => {
+  try {
+    const room = await RoomModel.findOne({ id });
+    return room || undefined;
+  } catch {
+    console.error("error al obtener room por id");
+  }
+};
+export const newRoom = async (
+  body: RoomsInterface
+): Promise<RoomsInterface> => {
+  try {
+    const room = new RoomModel(body);
+    await room.save();
+    return room.toObject();
+  } catch (error) {
+    console.error("Error al crear la room:", error);
+    throw error;
+  }
+};
 
-export const getAllRooms = (): RoomsInterface[] => {
-    return rooms
-}
+export const updateRoom = async (
+  id: string,
+  updates: Partial<RoomsInterface>
+): Promise<RoomsInterface | null> => {
+  try {
+    const room = await RoomModel.findOneAndUpdate({ id }, updates, {
+      new: true,
+    });
 
-export const roomById = (id: string): RoomsInterface | undefined => {
-    return rooms.find((room:RoomsInterface) => room.id ===id)
-}
+    if (!room) {
+      console.log("room no encontrada");
+      return null;
+    }
+
+    console.log("room actualizada con éxito");
+    return room.toObject();
+  } catch (error) {
+    console.error("Error al actualizar room:", error);
+    throw error;
+  }
+};
+
+export const deleteRoom = async (id: string) => {
+  try {
+    return await RoomModel.deleteOne({ id });
+  } catch (error) {
+    console.error("error al borrar");
+  }
+};

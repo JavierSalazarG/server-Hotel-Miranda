@@ -1,34 +1,73 @@
-import express, { Request, Response, Router } from 'express';
-import { CommentsInterface } from '../models/comments';
-import { allComments } from '../services/comments';
-import { commentById } from '../services/comments';
+import express, { Request, Response, Router } from "express";
+import { CommentsInterface } from "../models/comments";
+import {
+  allComments,
+  deleteComment,
+  newComment,
+  updateComment,
+} from "../services/comments";
+import { commentById } from "../services/comments";
 
-export const commentsRouter = Router()
+export const commentsRouter = Router();
 
-commentsRouter.get('/', (req: Request, res: Response) => {
-    const commets: CommentsInterface[]  = allComments()
-    res.send(commets)
-   })
-
-commentsRouter.get('/:id', (req: Request, res: Response) => {
-    let id: string = req.params.id;
-    const comment: CommentsInterface | undefined = commentById(id)
-    res.send(comment)
-   
+commentsRouter.get("/", async (req: Request, res: Response) => {
+  try {
+    const comment = await allComments();
+    res.send(comment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener comentarios" });
+  }
 });
 
-commentsRouter.post('/new', (req: Request, res: Response)=>{
-    res.send({success: true})
-})
+commentsRouter.get("/:id", async (req: Request, res: Response) => {
+  try {
+    let id: string = req.params.id;
+    const comment = await commentById(id);
+    if (!comment) {
+      return res.status(404).json({ error: "Comment no encontrado" });
+    }
+    res.send(comment);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
-commentsRouter.put('/:id', (req: Request, res: Response)=>{
-    res.send({success: true})
-})
+commentsRouter.post("/new", async (req: Request, res: Response) => {
+  try {
+    const comment = await newComment(req.body);
+    res.json([{ success: "Creado con éxito" }]);
+    res.send(comment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al crear el comment" });
+  }
+});
 
-commentsRouter.patch('/:id', (req: Request, res: Response)=>{
-    res.send({success: true})
-})
+commentsRouter.patch("/:id", async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    const updates: Partial<CommentsInterface> = req.body;
 
-commentsRouter.delete('/:id', (req: Request, res: Response)=>{
-    res.send({success: true})
-})
+    const updatedComment = await updateComment(id, updates);
+
+    if (!updatedComment) {
+      return res.status(404).json({ error: "Comment no encontrado" });
+    }
+
+    res.json(updatedComment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al actualizar El commentario" });
+  }
+});
+
+commentsRouter.delete("/:id", async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const data = await deleteComment(id);
+  if (data) {
+    res.json([{ success: "comment se ha borrado con exito" }]);
+  } else {
+    res.status(404).json({});
+  }
+});

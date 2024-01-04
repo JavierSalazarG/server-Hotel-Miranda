@@ -1,32 +1,76 @@
-import express, { Request, Response, Router } from 'express';
-import { BookingInterface } from '../models/booking';
-import { fetchAllBookings } from '../services/bookings';
-import { bookingById } from '../services/bookings';
-export const bookingRouter = Router()
+import express, { Request, Response, Router } from "express";
+import { BookingInterface } from "../models/booking";
+import {
+  deleteBooking,
+  fetchAllBookings,
+  fetchBookingById,
+  newBooking,
+  updateBooking,
+} from "../services/bookings";
 
-bookingRouter.get('/', (req: Request, res: Response) => {
-        const bookings: BookingInterface[] = fetchAllBookings()
-        res.send(bookings)
-    })
+export const bookingRouter = Router();
 
-bookingRouter.get('/:id', (req: Request, res: Response) => {
-    let id: string = req.params.id;
-    const booking: BookingInterface | undefined = bookingById(id)
-    res.send(booking)
+bookingRouter.get("/", async (req: Request, res: Response) => {
+  try {
+    const bookings = await fetchAllBookings();
+    res.send(bookings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener reservas" });
+  }
 });
 
-bookingRouter.post('/new', (req: Request, res: Response)=>{
-    res.send({success: true})
-})
+bookingRouter.get("/:id", async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    const booking = await fetchBookingById(id);
 
-bookingRouter.put('/:id', (req: Request, res: Response)=>{
-    res.send({success: true})
-})
+    if (!booking) {
+      return res.status(404).json({ error: "Reserva no encontrada" });
+    }
 
-bookingRouter.patch('/:id', (req: Request, res: Response)=>{
-    res.send({success: true})
-})
+    res.send(booking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener reserva por ID" });
+  }
+});
 
-bookingRouter.delete('/:id', (req: Request, res: Response)=>{
-    res.send({success: true})
-})
+bookingRouter.post("/new", async (req: Request, res: Response) => {
+  try {
+    const booking = await newBooking(req.body);
+    res.json([{ success: "Creado con éxito" }]);
+    res.send(booking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al crear la reserva" });
+  }
+});
+
+bookingRouter.patch("/:id", async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    const updates: Partial<BookingInterface> = req.body;
+
+    const updatedBooking = await updateBooking(id, updates);
+
+    if (!updatedBooking) {
+      return res.status(404).json({ error: "Reserva no encontrada" });
+    }
+
+    res.json(updatedBooking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al actualizar la reserva" });
+  }
+});
+
+bookingRouter.delete("/:id", async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const data = await deleteBooking(id);
+  if (data) {
+    res.json([{ success: "Booking se ha borrado con exito" }]);
+  } else {
+    res.status(404).json({});
+  }
+});

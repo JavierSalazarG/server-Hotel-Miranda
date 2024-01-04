@@ -8,7 +8,7 @@ import { roomsRouter } from "./controllers/roomsController";
 import { usersRouter } from "./controllers/usersController";
 import { loginAuthenticationMiddleware } from "./middleware/login";
 const app = express();
-
+connectMongo();
 app.use(express.json());
 const port = process.env.NODE_ENV === "test" ? 3001 : 3000;
 
