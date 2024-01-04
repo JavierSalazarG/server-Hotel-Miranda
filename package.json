@@ -2,7 +2,7 @@
   "name": "server-hotel-miranda",
   "version": "1.0.0",
   "description": "server creado con Node y expres para Hotel Miranda",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.ts",
     "seedRoom": "ts-node seed/seedRoom.ts",
@@ -11,6 +11,7 @@
     "seedBookings": "ts-node seed/seedBooking.ts",
     "test": "jest"
   },
+  "keywords": [],
   "author": "Javier Salazar",
   "license": "ISC",
   "dependencies": {
@@ -19,7 +20,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3",
     "nodemo": "^1.0.0",
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
@@ -29,6 +31,7 @@
     "@types/mocha": "^10.0.6",
     "@types/supertest": "^2.0.16",
     "jest": "^29.7.0",
+    "serverless-dotenv-plugin": "^6.0.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
