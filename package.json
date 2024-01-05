@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.ts",
+    "build": "tsc --build",
     "seedRoom": "ts-node seed/seedRoom.ts",
     "seedUsers": "ts-node seed/seedUsers.ts",
     "seedComments": "ts-node seed/seedComments",
