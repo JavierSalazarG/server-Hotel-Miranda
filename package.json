@@ -7,6 +7,7 @@
     "start": "nodemon app.ts",
     "build": "tsc --build",
     "deploy": "serverless deploy",
+    "seedTables": "ts-node seed/seedTables",
     "seedRoom": "ts-node seed/seedRoom.ts",
     "seedUsers": "ts-node seed/seedUsers.ts",
     "seedComments": "ts-node seed/seedComments",
