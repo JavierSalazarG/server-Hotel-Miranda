@@ -14,11 +14,6 @@ const roomSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
     },
-    id: {
-        type: String,
-        required: true,
-        unique: true,
-    },
     bedType: {
         type: String,
         required: true,

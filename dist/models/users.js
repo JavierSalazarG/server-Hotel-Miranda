@@ -3,13 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersModel = void 0;
 const mongoose_1 = require("mongoose");
 const usersSchema = new mongoose_1.Schema({
-    id: {
-        type: String,
-        required: true,
-        unique: true,
-    },
+    photo: String,
     nombre: String,
-    foto: String,
     email: String,
     start_date: String,
     description: String,

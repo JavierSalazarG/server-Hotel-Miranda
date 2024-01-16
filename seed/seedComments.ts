@@ -7,7 +7,6 @@ async function createComments() {
     await connectMongo();
     for (let index = 0; index <= 10; index++) {
       const comment = new commentsModel({
-        id: faker.number.hex({ min: 0, max: 65535 }),
         name: faker.person.fullName(),
         fecha: faker.date.past().toLocaleDateString(),
         foto_perfil: faker.image.avatarLegacy(),

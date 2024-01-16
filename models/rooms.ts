@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 export interface RoomsInterface {
   imgs: {
@@ -9,7 +9,6 @@ export interface RoomsInterface {
     img5: string | null;
   };
   roomNumber: number;
-  id: string;
   bedType: string;
   facilities: string[];
   rate: number;
@@ -31,11 +30,7 @@ const roomSchema = new Schema<RoomsInterface>({
     type: Number,
     required: true,
   },
-  id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+
   bedType: {
     type: String,
     required: true,

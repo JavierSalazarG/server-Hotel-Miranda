@@ -25,7 +25,6 @@ async function createRoom() {
             img2: faker.image.url(),
           },
           roomNumber: faker.number.int({ min: 111111111, max: 999999999 }),
-          id: faker.number.hex({ min: 0, max: 65535 }),
           bedType: bedType[randomType],
           facilities: [faker.string.alpha(), faker.string.alpha()],
           rate: faker.number.float({ min: 20, max: 700, precision: 0.01 }),

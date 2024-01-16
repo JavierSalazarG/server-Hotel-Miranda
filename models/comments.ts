@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 export interface CommentsInterface {
-  id: string;
   nombre: string;
   fecha: string;
   foto_perfil: string;
@@ -9,7 +8,6 @@ export interface CommentsInterface {
 }
 
 const CommentsSchema = new Schema({
-  id: { type: String, require: true, unique: true },
   nombre: String,
   fecha: String,
   foto_perfil: String,

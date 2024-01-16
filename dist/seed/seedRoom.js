@@ -39,7 +39,6 @@ function createRoom() {
                             img2: faker_1.faker.image.url(),
                         },
                         roomNumber: faker_1.faker.number.int({ min: 111111111, max: 999999999 }),
-                        id: faker_1.faker.number.hex({ min: 0, max: 65535 }),
                         bedType: bedType[randomType],
                         facilities: [faker_1.faker.string.alpha(), faker_1.faker.string.alpha()],
                         rate: faker_1.faker.number.float({ min: 20, max: 700, precision: 0.01 }),

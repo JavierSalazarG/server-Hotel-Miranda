@@ -5,16 +5,17 @@ import { faker } from "@faker-js/faker";
 async function createUsers() {
   try {
     await connectMongo();
+
     for (let index = 0; index <= 10; index++) {
+      const status = faker.datatype.boolean({ probability: 0.7 });
       const user = new UsersModel({
-        id: faker.number.hex({ min: 0, max: 65535 }),
-        name: faker.person.fullName(),
-        photo: faker.image.avatarLegacy(),
+        photo: faker.image.avatar(),
+        nombre: faker.person.fullName(),
         email: faker.internet.email(),
-        contact: faker.number.int({ min: 111111111, max: 999999999 }),
-        description: faker.lorem.sentence(),
         start_date: faker.date.past().toLocaleDateString(),
-        status: true,
+        description: faker.lorem.sentence(),
+        contact: faker.number.int({ min: 111111111, max: 999999999 }),
+        status: status,
       });
       await user.save();
     }

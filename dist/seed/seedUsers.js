@@ -21,15 +21,15 @@ function createUsers() {
         try {
             yield (0, mongo_1.connectMongo)();
             for (let index = 0; index <= 10; index++) {
+                const status = faker_1.faker.datatype.boolean({ probability: 0.5 });
                 const user = new users_1.UsersModel({
-                    id: faker_1.faker.number.hex({ min: 0, max: 65535 }),
-                    name: faker_1.faker.person.fullName(),
-                    photo: faker_1.faker.image.avatarLegacy(),
+                    photo: faker_1.faker.image.avatar(),
+                    nombre: faker_1.faker.person.fullName(),
                     email: faker_1.faker.internet.email(),
-                    contact: faker_1.faker.number.int({ min: 111111111, max: 999999999 }),
-                    description: faker_1.faker.lorem.sentence(),
                     start_date: faker_1.faker.date.past().toLocaleDateString(),
-                    status: true,
+                    description: faker_1.faker.lorem.sentence(),
+                    contact: faker_1.faker.number.int({ min: 111111111, max: 999999999 }),
+                    status: status,
                 });
                 yield user.save();
             }

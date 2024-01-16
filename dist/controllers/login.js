@@ -17,20 +17,24 @@ const express_1 = __importDefault(require("express"));
 exports.loginRouter = express_1.default.Router();
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const KEY_ENV = process.env.JWT_SECRET || "";
-exports.loginRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.loginRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (!email || !password) {
-        return res.status(400).json({ error: 'Faltan email o password en la solicitud' });
+        return res
+            .status(400)
+            .json({ error: "Faltan email o password en la solicitud" });
     }
-    if (email === 'admin@admin.com' && password === 'admin') {
+    if (email === "admin@admin.com" && password === "admin") {
         try {
             const token = jsonwebtoken_1.default.sign({ email }, KEY_ENV);
-            return res.status(200).json({ token, status: 'ok' });
+            return res.status(200).json({ token, status: "ok" });
         }
         catch (error) {
-            console.error('Error al generar el token:', error);
-            return res.status(500).json({ error: 'Error interno al generar el token' });
+            console.error("Error al generar el token:", error);
+            return res
+                .status(500)
+                .json({ error: "Error interno al generar el token" });
         }
     }
-    res.status(401).json({ error: 'Credenciales incorrectas' });
+    res.status(401).json({ error: "Credenciales incorrectas" });
 }));

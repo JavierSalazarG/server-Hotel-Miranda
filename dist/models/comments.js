@@ -23,20 +23,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BookingModel = void 0;
+exports.commentsModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const bookingSchema = new mongoose_1.Schema({
-    id: { type: String, require: true, unique: true },
-    id_habitacion: String,
+const CommentsSchema = new mongoose_1.Schema({
     nombre: String,
-    apellidos: String,
-    fecha_reserva: String,
-    check_in: String,
-    check_out: String,
-    ha_anadido_mensaje: Boolean,
-    mensaje: { type: String, require: false },
-    bedType: String,
-    numero_habitacion: Number,
-    status: String,
+    fecha: String,
+    foto_perfil: String,
+    archive: Boolean,
+    comentario: { type: String, require: false },
 });
-exports.BookingModel = mongoose_1.default.model("Booking", bookingSchema);
+exports.commentsModel = mongoose_1.default.model("comments", CommentsSchema);

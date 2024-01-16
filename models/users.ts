@@ -1,9 +1,8 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 export interface UsersInterface {
-  id: string;
+  photo: string | null;
   nombre: string;
-  foto: string | null;
   email: string;
   start_date: string;
   description: string;
@@ -12,13 +11,8 @@ export interface UsersInterface {
 }
 
 const usersSchema = new Schema<UsersInterface>({
-  id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  photo: String,
   nombre: String,
-  foto: String,
   email: String,
   start_date: String,
   description: String,

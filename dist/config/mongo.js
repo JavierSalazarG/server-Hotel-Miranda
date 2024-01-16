@@ -14,11 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectMongo = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
+const mongoDBUrl = "mongodb+srv://javisalazardev:NSHostTMnSpWh2fB@server-miranda.iqxigsn.mongodb.net/Hotel-Miranda";
 const connectMongo = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const mongoDBUrl = process.env.URL__DB ||
-            "mongodb+srv://javisalazardev:NSHostTMnSpWh2fB@server-miranda.iqxigsn.mongodb.net/Hotel-Miranda";
-        console.log(mongoDBUrl);
         yield mongoose_1.default.connect(mongoDBUrl);
         console.log("----->  Conectado a mongo  <-----");
     }

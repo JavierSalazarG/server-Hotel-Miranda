@@ -22,7 +22,6 @@ function createComments() {
             yield (0, mongo_1.connectMongo)();
             for (let index = 0; index <= 10; index++) {
                 const comment = new comments_1.commentsModel({
-                    id: faker_1.faker.number.hex({ min: 0, max: 65535 }),
                     name: faker_1.faker.person.fullName(),
                     fecha: faker_1.faker.date.past().toLocaleDateString(),
                     foto_perfil: faker_1.faker.image.avatarLegacy(),

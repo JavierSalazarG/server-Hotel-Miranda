@@ -33,8 +33,7 @@ function createBooking() {
                     const dateOut = faker_1.faker.date.soon({ days: 5, refDate: check_in });
                     const description = faker_1.faker.datatype.boolean({ probability: 0.6 });
                     const booking = new booking_1.BookingModel({
-                        id: faker_1.faker.number.hex({ min: 0, max: 65535 }),
-                        id_habitacion: randomRoomId.id.toString(),
+                        id_habitacion: randomRoomId._id.toString(),
                         nombre: faker_1.faker.person.fullName(),
                         apellidos: faker_1.faker.person.lastName(),
                         fecha_reserva: Date.now().toString(),
@@ -42,7 +41,7 @@ function createBooking() {
                         check_out: dateOut.toString(),
                         ha_anadido_mensaje: description,
                         mensaje: description ? faker_1.faker.lorem.lines({ min: 1, max: 3 }) : null,
-                        bedType: randomRoomId.bedType,
+                        tipo_habitacion: randomRoomId.bedType,
                         numero_habitacion: faker_1.faker.number.int({ min: 11, max: 999 }),
                         status: true,
                     });
