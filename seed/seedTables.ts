@@ -10,13 +10,26 @@ export const createTablesSQL = async () => {
     comentario TEXT    
 );
     `;
+  const createRoomsTable = `
+    CREATE TABLE IF NOT EXISTS rooms (
+    _id INT AUTO_INCREMENT PRIMARY KEY,
+    imgs VARCHAR(255) NOT NULL,
+    bedType VARCHAR(255) NOT NULL,
+    facilities JSON,
+    rate INT NOT NULL,
+    offerPrice INT NOT NULL,
+    status BOOLEAN NOT NULL,
+    description VARCHAR(255),
+    start_date VARCHAR(255)
+);
+    `;
 
   try {
-    console.log("desde seddTablas");
     const connectionSQL = await connectSQL();
     const [resultComments] = await connectionSQL.query(createCommentsTable);
-
-    console.log("resultado tabla:", resultComments);
+    const [resultRooms] = await connectionSQL.query(createRoomsTable);
+    console.log("resultado tabla Comment:", resultComments);
+    console.log("resultado tabla Rooms:", resultRooms);
     await connectionSQL.end();
   } catch (e) {
     console.error("Error al crear en sql:", e);
