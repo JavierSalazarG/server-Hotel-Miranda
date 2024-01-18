@@ -26,3 +26,11 @@ export const connectSQL = async (): Promise<Connection> => {
     throw e;
   }
 };
+
+export const sqlQuery = async (
+  sqlQuery: string,
+  params?: any[]
+): Promise<any> => {
+  const connection = await connectSQL();
+  return await connection.execute(sqlQuery, params);
+};
