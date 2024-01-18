@@ -1,21 +1,27 @@
-// import { UsersInterface, UsersModel } from "../models/users";
+import { UsersInterface, UsersModel } from "../models/users";
+import { connectSQL } from "../config/sql";
 
-// export const fetchAllUsers = async (): Promise<UsersInterface[]> => {
-//   return await UsersModel.find();
-// };
+export const fetchAllUsers = async (): Promise<any> => {
+  try {
+    const connection = await connectSQL();
+    const [resoponse] = await connection.execute("SELECT * FROM users");
+    return resoponse;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
-// export const fetchUserById = async (
-//   id: string
-// ): Promise<UsersInterface | null> => {
-//   try {
-//     const user = await UsersModel.findOne({ id });
-
-//     return user || null;
-//   } catch (error) {
-//     console.error("Error al obtener el user por ID:", error);
-//     throw error;
-//   }
-// };
+export const fetchUserById = async (id: string): Promise<any | null> => {
+  try {
+    const connection = await connectSQL();
+    const [resoponse] = await connection.execute(
+      `SELECT * FROM users WHERE _id = ${id}`
+    );
+    return resoponse;
+  } catch {
+    console.error("error al obtener room por id");
+  }
+};
 
 // export const newUser = async (
 //   body: UsersInterface
