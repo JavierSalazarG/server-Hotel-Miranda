@@ -15,11 +15,12 @@ export const createTablesSQL = async () => {
     CREATE TABLE IF NOT EXISTS rooms (
     _id INT AUTO_INCREMENT PRIMARY KEY,
     imgs VARCHAR(255) NOT NULL,
+    roomNumber INT NOT NULL,
     bedType VARCHAR(255) NOT NULL,
     facilities JSON,
     rate INT NOT NULL,
     offerPrice INT NOT NULL,
-    status BOOLEAN NOT NULL,
+    status VARCHAR(80) NOT NULL,
     description VARCHAR(255),
     start_date VARCHAR(255)
 );
