@@ -13,6 +13,7 @@ export const usersJoi = Joi.object({
   photo: Joi.string().required(),
   nombre: Joi.string().required(),
   email: Joi.string().required(),
+  start_date: Joi.date().required(),
   description: Joi.string().required(),
   contact: Joi.number().required(),
   status: Joi.boolean().required(),

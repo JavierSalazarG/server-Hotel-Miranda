@@ -14,7 +14,7 @@ export interface BookingInterface {
 }
 
 export const bookingJoi = Joi.object({
-  id_habitacion: Joi.array().required(),
+  id_habitacion: Joi.number().required(),
   nombre: Joi.string().required(),
   apellidos: Joi.string().required(),
   fecha_reserva: Joi.date().required(),
