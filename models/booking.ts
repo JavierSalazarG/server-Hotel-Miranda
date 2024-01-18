@@ -1,6 +1,6 @@
 import Joi from "joi";
 export interface BookingInterface {
-  id_habitacion?: string;
+  id_habitacion?: number;
   nombre: string;
   apellidos: string;
   fecha_reserva: string;
@@ -15,11 +15,11 @@ export interface BookingInterface {
 
 export const bookingJoi = Joi.object({
   id_habitacion: Joi.array().required(),
-  nombre: Joi.array().required(),
-  apellidos: Joi.array().required(),
-  fecha_reserva: Joi.array().required(),
-  check_in: Joi.array().required(),
-  check_out: Joi.array().required(),
+  nombre: Joi.string().required(),
+  apellidos: Joi.string().required(),
+  fecha_reserva: Joi.date().required(),
+  check_in: Joi.date().required(),
+  check_out: Joi.date().required(),
   ha_anadido_mensaje: Joi.boolean().required(),
   mensaje: Joi.string(),
   tipo_habitacion: Joi.string().required(),
