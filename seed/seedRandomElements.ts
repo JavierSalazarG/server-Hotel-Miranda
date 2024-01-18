@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker/locale/es";
 import { connectSQL } from "../config/sql";
+import { allRooms } from "../services/rooms";
 
 const createContactRandom = async () => {
   const connection = await connectSQL();
@@ -172,7 +173,59 @@ const createRoomsRandom = async () => {
     }
   }
 };
-createContactRandom();
-createUsersRandom();
-createRoomsRandom();
+
+const CreateBookingRandom = async () => {
+  const connection = await connectSQL();
+  const rooms = await allRooms();
+  const random = Math.floor(Math.random() * rooms.length);
+  const description = faker.datatype.boolean({ probability: 0.6 });
+  const habitacion = rooms[random];
+  let fechaActual = new Date();
+  let año = fechaActual.getFullYear();
+  let mes = fechaActual.getMonth() + 1;
+  let dia = fechaActual.getDate();
+  let fechaFormateada =
+    año + "/" + (mes < 10 ? "0" : "") + mes + "/" + (dia < 10 ? "0" : "") + dia;
+  for (let index = 0; index < 10; index++) {
+    const booking = {
+      id_habitacion: habitacion._id,
+      nombre: faker.person.fullName(),
+      apellidos: faker.person.lastName(),
+      fecha_reserva: fechaFormateada,
+      check_in: faker.date.soon().toISOString().split("T")[0],
+      check_out: faker.date.future().toISOString().split("T")[0],
+      ha_anadido_mensaje: description,
+      mensaje: description ? faker.lorem.lines({ min: 1, max: 3 }) : null,
+      tipo_habitacion: habitacion.bedType,
+      numero_habitacion: habitacion.roomNumber,
+      status: true,
+    };
+    const sqlLlamada = `
+    INSERT INTO bookings (id_habitacion, nombre, apellidos, fecha_reserva, check_in, check_out, ha_anadido_mensaje, mensaje, tipo_habitacion, numero_habitacion, status)
+          VALUES (?, ?, ?, ?, ?, ?,?,?,?, ? ,?);
+    `;
+    try {
+      const [result] = await connection.execute(sqlLlamada, [
+        booking.id_habitacion,
+        booking.nombre,
+        booking.apellidos,
+        booking.fecha_reserva,
+        booking.check_in,
+        booking.check_out,
+        booking.ha_anadido_mensaje,
+        booking.mensaje,
+        booking.tipo_habitacion,
+        booking.numero_habitacion,
+        booking.status,
+      ]);
+      console.log("rooms Resultado:", result);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+};
+// createContactRandom();
+// createUsersRandom();
+//createRoomsRandom();
+
 CreateBookingRandom();

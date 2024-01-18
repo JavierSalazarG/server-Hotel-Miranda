@@ -17,7 +17,7 @@ export const bookingJoi = Joi.object({
   id_habitacion: Joi.number().required(),
   nombre: Joi.string().required(),
   apellidos: Joi.string().required(),
-  fecha_reserva: Joi.date().required(),
+  fecha_reserva: Joi.string().required(),
   check_in: Joi.date().required(),
   check_out: Joi.date().required(),
   ha_anadido_mensaje: Joi.boolean().required(),
