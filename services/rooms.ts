@@ -1,31 +1,25 @@
-// import { RoomModel, RoomsInterface } from "../models/rooms";
-
-// export const allRooms = async (): Promise<RoomsInterface[]> => {
-//   return await RoomModel.find();
-// };
-// export const roomById = async (
-//   id: string
-// ): Promise<RoomsInterface | undefined> => {
-//   try {
-//     const room = await RoomModel.findOne({ id });
-//     return room || undefined;
-//   } catch {
-//     console.error("error al obtener room por id");
-//   }
-// };
-// export const newRoom = async (
-//   body: RoomsInterface
-// ): Promise<RoomsInterface> => {
-//   try {
-//     const room = new RoomModel(body);
-//     await room.save();
-//     return room.toObject();
-//   } catch (error) {
-//     console.error("Error al crear la room:", error);
-//     throw error;
-//   }
-// };
-
+import { RoomsInterface } from "../models/rooms";
+import { connectSQL } from "../config/sql";
+export const allRooms = async (): Promise<any> => {
+  try {
+    const connection = await connectSQL();
+    const [resoponse] = await connection.execute("SELECT * FROM rooms");
+    return resoponse;
+  } catch (e) {
+    console.error(e);
+  }
+};
+export const roomById = async (id: string): Promise<any | undefined> => {
+  try {
+    const connection = await connectSQL();
+    const [resoponse] = await connection.execute(
+      `SELECT * FROM rooms WHERE _id = ${id}`
+    );
+    return resoponse;
+  } catch {
+    console.error("error al obtener room por id");
+  }
+};
 // export const updateRoom = async (
 //   id: string,
 //   updates: Partial<RoomsInterface>
@@ -48,10 +42,14 @@
 //   }
 // };
 
-// export const deleteRoom = async (id: string) => {
-//   try {
-//     return await RoomModel.deleteOne({ id });
-//   } catch (error) {
-//     console.error("error al borrar");
-//   }
-// };
+export const deleteRoom = async (id: string) => {
+  try {
+    const connection = await connectSQL();
+    const [res] = await connection.execute(
+      `DELETE FROM rooms WHERE _id = ${id}`
+    );
+    return res;
+  } catch (error) {
+    console.error("error al borrar");
+  }
+};

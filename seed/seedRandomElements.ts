@@ -175,3 +175,4 @@ const createRoomsRandom = async () => {
 createContactRandom();
 createUsersRandom();
 createRoomsRandom();
+CreateBookingRandom();

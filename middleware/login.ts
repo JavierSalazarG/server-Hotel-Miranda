@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
-import dotenv from 'dotenv';
+import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -20,13 +20,16 @@ export const loginAuthenticationMiddleware = async (
   if (!auth) {
     return res
       .status(401)
-      .json({ error: true, message: 'La autorización no está en el encabezado' });
+      .json({
+        error: true,
+        message: "La autorización no está en el encabezado",
+      });
   }
 
-  const token = auth.split('Bearer ')[1];
+  const token = auth.split("Bearer ")[1];
 
   if (!token) {
-    return res.status(401).json({ error: 'No autorizado' });
+    return res.status(401).json({ error: "No autorizado" });
   } else {
     if (KEY_ENV) {
       try {
@@ -34,12 +37,12 @@ export const loginAuthenticationMiddleware = async (
         req.perfil = perfil;
         next();
       } catch (err) {
-        console.error('Error al verificar el token:', err);
-        return res.status(403).json({ error: 'Error en el token' });
+        console.error("Error al verificar el token:", err);
+        return res.status(403).json({ error: "Error en el token" });
       }
     } else {
-      console.error('La clave JWT no está configurada correctamente');
-      return res.status(500).json({ error: 'Error interno del servidor' });
+      console.error("La clave JWT no está configurada correctamente");
+      return res.status(500).json({ error: "Error interno del servidor" });
     }
   }
 };
