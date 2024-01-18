@@ -4,6 +4,7 @@ export const createTablesSQL = async () => {
   const createCommentsTable = `
     CREATE TABLE IF NOT EXISTS contacts (
     _id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     foto_perfil VARCHAR(255),
     archive BOOLEAN,
