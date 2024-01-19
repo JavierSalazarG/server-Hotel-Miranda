@@ -1,22 +1,25 @@
-// import { BookingInterface, BookingModel } from "../models/booking";
-
-// export const fetchAllBookings = async (): Promise<BookingInterface[]> => {
-//   return await BookingModel.find();
-// };
-
-// export const fetchBookingById = async (
-//   id: string
-// ): Promise<BookingInterface | null> => {
-//   try {
-//     const booking = await BookingModel.findOne({ id });
-
-//     return booking || null;
-//   } catch (error) {
-//     console.error("Error al obtener reserva por ID:", error);
-//     throw error;
-//   }
-// };
-
+import { BookingInterface, BookingModel } from "../models/booking";
+import { connectSQL } from "../config/sql";
+export const allBookings = async (): Promise<any> => {
+  try {
+    const connection = await connectSQL();
+    const [resoponse] = await connection.execute("SELECT * FROM bookings");
+    return resoponse;
+  } catch (e) {
+    console.error(e);
+  }
+};
+export const bookingById = async (id: string): Promise<any | undefined> => {
+  try {
+    const connection = await connectSQL();
+    const [resoponse] = await connection.execute(
+      `SELECT * FROM bookings WHERE _id = ${id}`
+    );
+    return resoponse;
+  } catch {
+    console.error("error al obtener room por id");
+  }
+};
 // export const newBooking = async (
 //   body: BookingInterface
 // ): Promise<BookingInterface> => {
@@ -50,10 +53,15 @@
 //     throw error;
 //   }
 // };
-// export const deleteBooking = async (id: string) => {
-//   try {
-//     return await BookingModel.deleteOne({ id });
-//   } catch (error) {
-//     console.error("error al borrar");
-//   }
-// };
+
+export const deleteBooking = async (id: string) => {
+  try {
+    const connection = await connectSQL();
+    const [res] = await connection.execute(
+      `DELETE FROM bookings WHERE _id = ${id}`
+    );
+    return res;
+  } catch (error) {
+    console.error("error al borrar");
+  }
+};
