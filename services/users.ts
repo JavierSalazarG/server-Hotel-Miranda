@@ -57,10 +57,15 @@ export const fetchUserById = async (id: string): Promise<any | null> => {
 //     throw error;
 //   }
 // };
-// export const deleteUser = async (id: string) => {
-//   try {
-//     return await UsersModel.deleteOne({ id });
-//   } catch (error) {
-//     console.error("error al borrar");
-//   }
-// };
+
+export const deleteUser = async (id: string) => {
+  try {
+    const connection = await connectSQL();
+    const [res] = await connection.execute(
+      `DELETE FROM users WHERE _id = ${id}`
+    );
+    return res;
+  } catch (error) {
+    console.error("error al borrar");
+  }
+};

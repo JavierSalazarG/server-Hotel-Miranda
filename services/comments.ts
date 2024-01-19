@@ -1,18 +1,25 @@
-// import { CommentsInterface, commentsModel } from "../models/comments";
-
-// export const allComments = async (): Promise<CommentsInterface[]> => {
-//   return await commentsModel.find();
-// };
-// export const commentById = async (
-//   id: string
-// ): Promise<CommentsInterface | undefined> => {
-//   try {
-//     const comment = await commentsModel.findOne({ id });
-//     return comment || undefined;
-//   } catch {
-//     console.error("error al obtener comment por id");
-//   }
-// };
+import { CommentsInterface, commentsModel } from "../models/comments";
+import { connectSQL } from "../config/sql";
+export const allComments = async (): Promise<any> => {
+  try {
+    const connection = await connectSQL();
+    const [resoponse] = await connection.execute("SELECT * FROM comments");
+    return resoponse;
+  } catch (e) {
+    console.error(e);
+  }
+};
+export const commentById = async (id: string): Promise<any | undefined> => {
+  try {
+    const connection = await connectSQL();
+    const [resoponse] = await connection.execute(
+      `SELECT * FROM comments WHERE _id = ${id}`
+    );
+    return resoponse;
+  } catch {
+    console.error("error al obtener room por id");
+  }
+};
 // export const newComment = async (
 //   body: CommentsInterface
 // ): Promise<CommentsInterface> => {
@@ -48,10 +55,14 @@
 //   }
 // };
 
-// export const deleteComment = async (id: string) => {
-//   try {
-//     return await commentsModel.deleteOne({ id });
-//   } catch (error) {
-//     console.error("error al borrar");
-//   }
-// };
+export const deleteComment = async (id: string) => {
+  try {
+    const connection = await connectSQL();
+    const [res] = await connection.execute(
+      `DELETE FROM comments WHERE _id = ${id}`
+    );
+    return res;
+  } catch (error) {
+    console.error("error al borrar");
+  }
+};
