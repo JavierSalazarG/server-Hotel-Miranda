@@ -21,7 +21,7 @@ jobs:
       - name: TypeScript Compilation
         run: npm run build
       - name: Deploy serverless
-        run: npx serverless deploy arn:aws:lambda:eu-west-3:925115129557:function:server-Hotel-Miranda
+        run: npm run deploy arn:aws:lambda:eu-west-3:925115129557:function:server-Hotel-Miranda
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.CLAVE_PUBLICA_AWS }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.CLAVE_PRIVADA_AWS }}
