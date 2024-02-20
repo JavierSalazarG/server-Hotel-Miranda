@@ -23,18 +23,31 @@ export const fetchUserById = async (id: string): Promise<any | null> => {
   }
 };
 
-// export const newUser = async (
-//   body: UsersInterface
-// ): Promise<UsersInterface> => {
-//   try {
-//     const user = new UsersModel(body);
-//     await user.save();
-//     return user.toObject();
-//   } catch (error) {
-//     console.error("Error al crear el usuario:", error);
-//     throw error;
-//   }
-// };
+export const newUser = async (
+  user: UsersInterface
+): Promise<UsersInterface> => {
+  try {
+    const connection = await connectSQL();
+    const userQuery = `
+    INSERT INTO users (photo, nombre, email, start_date, description, contact, status)
+          VALUES (?, ?, ?, ?, ?, ?,?);
+    `;
+    connection.execute(userQuery, [
+      user.photo,
+      user.nombre,
+      user.email,
+      user.start_date,
+      user.description,
+      user.contact,
+      user.status,
+    ]);
+    console.log("user creado con éxito");
+    return user;
+  } catch (error) {
+    console.error("Error al crear el usuario:", error);
+    throw error;
+  }
+};
 
 // export const updateUser = async (
 //   id: string,
