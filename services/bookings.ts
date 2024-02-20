@@ -12,7 +12,7 @@ export const fetchBookingById = async (
 
     return booking || null;
   } catch (error) {
-    console.error("Error al obtener reserva por ID:", error);
+    console.error("Error al obtener reserva por el ID:", error);
     throw error;
   }
 };
