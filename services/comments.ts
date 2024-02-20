@@ -52,6 +52,6 @@ export const deleteComment = async (id: string) => {
   try {
     return await commentsModel.deleteOne({ id });
   } catch (error) {
-    console.error("error al borrar");
+    console.error("error al borrar borrar");
   }
 };
