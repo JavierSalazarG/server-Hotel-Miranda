@@ -15,9 +15,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PASS_DB: ${{ secrets.PASS_DB }}
+          URL_DB: ${{ secrets.RL_DB }}
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
 
       - name: Install dependencies
         run: npm install
+
       - name: TypeScript Compilation
         run: npm run build
       - name: Deploy serverless
@@ -25,6 +35,3 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.CLAVE_PUBLICA_AWS }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.CLAVE_PRIVADA_AWS }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          PASS_DB: ${{ secrets.PASS_DB }}
-          URL_DB: ${{ secrets.RL_DB }}
