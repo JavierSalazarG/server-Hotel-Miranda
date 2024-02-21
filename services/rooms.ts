@@ -52,6 +52,6 @@ export const deleteRoom = async (id: string) => {
   try {
     return await RoomModel.deleteOne({ id });
   } catch (error) {
-    console.error("error al borrar");
+    console.error("error al borrar el room");
   }
 };
