@@ -25,3 +25,6 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.CLAVE_PUBLICA_AWS }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.CLAVE_PRIVADA_AWS }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PASS_DB: ${{ secrets.PASS_DB }}
+          URL_DB: ${{ secrets.RL_DB }}
